@@ -140,10 +140,13 @@ class KalmanFilter(object):
             estimate.
 
         """
+        # Tweaking the following parameters lets us customize the amount of uncertainty
+        # for each of the elements of the state vector (measurements).
         std = [
             self._std_weight_position * mean[3],
             self._std_weight_position * mean[3],
-            1e-1,
+            # Set the following std for measurements, equal as std for predictions:
+            1e-2,
             self._std_weight_position * mean[3]]
         innovation_cov = np.diag(np.square(std))
 
