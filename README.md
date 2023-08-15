@@ -300,3 +300,11 @@ python3 tools/demo_track.py video -f exps/example/mot/yolox_x_mix_det.py -c pret
 ## Acknowledgement
 
 A large part of the code is borrowed from [YOLOX](https://github.com/Megvii-BaseDetection/YOLOX), [FairMOT](https://github.com/ifzhang/FairMOT), [TransTrack](https://github.com/PeizeSun/TransTrack) and [JDE-Cpp](https://github.com/samylee/Towards-Realtime-MOT-Cpp). Many thanks for their wonderful works.
+
+## Custom fork (jcruz-ferreyra)
+
+### Customized Kalman Filter for Improved Object Tracking
+
+In this fork of the repository I fine-tuned the Kalman filter by reducing the standard deviation (std) values asociated with measurements aspect ratio, in the `project` method from kalman_filter.py. By doing this, I reduced the expected uncertainty in aspect ratio of the detections, allowing the Kalman filter to adapt tracked bounding box's aspect ratio based on subsequent measurements.
+
+This solution aimed to solve the partial appearance of objects in the initial frame, which led to inaccurate aspect ratio measurements for bounding boxes. The original value for the std of the measurement's aspect ratio propagates the initial aspect ratio (corresponding to the part of the object appearing in the first frame) to the following frames even if after a few frames the object become fully visible and its detection aspect ratio differ from the one tracked initially.
